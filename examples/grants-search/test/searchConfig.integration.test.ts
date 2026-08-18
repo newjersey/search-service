@@ -47,6 +47,7 @@ beforeAll(async () => {
 })
 
 afterAll(async () => {
+  await db.destroy()
   await container.stop()
 })
 
