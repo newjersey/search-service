@@ -6,3 +6,7 @@ dist/
 *.log
 
 .next/
+
+.env
+.env.*
+!.env.example

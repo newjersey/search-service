@@ -25,7 +25,7 @@ A minimal, working Next.js integration of the NJIA faceted search toolkit — co
 
 ## Running it
 
-1. Point `GRANTS_DATABASE_URL` at a Postgres database with the `grants` table above (and `pg_trgm` enabled: `CREATE EXTENSION IF NOT EXISTS pg_trgm;`).
+1. Copy `.env.example` to `.env.local` and point `GRANTS_DATABASE_URL` at a Postgres database with the `grants` table above (and `pg_trgm` enabled: `CREATE EXTENSION IF NOT EXISTS pg_trgm;`).
 2. `npm install && npm run dev`
 3. Visit `/grants`.
 
