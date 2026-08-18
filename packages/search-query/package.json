@@ -1,0 +1,32 @@
+{
+  "name": "@newjersey/search-query",
+  "version": "0.1.0",
+  "description": "Postgres query builder for the NJIA faceted search toolkit",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@newjersey/search-core": "^0.1.0",
+    "kysely": "^0.29.5",
+    "pg": "^8.23.0"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.21.0",
+    "testcontainers": "^12.1.0",
+    "@testcontainers/postgresql": "^12.1.0"
+  }
+}
