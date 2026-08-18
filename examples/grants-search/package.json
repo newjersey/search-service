@@ -1,0 +1,31 @@
+{
+  "name": "grants-search-example",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "next": "^16.3.1",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "kysely": "^0.29.5",
+    "pg": "^8.23.0",
+    "@newjersey/search-core": "^0.1.0",
+    "@newjersey/search-query": "^0.1.0",
+    "@newjersey/search-ui": "^0.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.10",
+    "@types/react": "^19.2.18",
+    "@types/node": "^26.2.0",
+    "@types/pg": "^8.21.0",
+    "testcontainers": "^12.1.0",
+    "@testcontainers/postgresql": "^12.1.0"
+  }
+}
