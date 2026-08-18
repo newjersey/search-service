@@ -19,13 +19,8 @@ interface Grant {
 const sortOptions: SortOption[] = [
   { value: "deadline-asc", label: "Deadline: soonest first", field: "deadline", direction: "asc" },
   { value: "deadline-desc", label: "Deadline: latest first", field: "deadline", direction: "desc" },
-  {
-    value: "amount-desc",
-    label: "Funding amount: highest first",
-    field: "amount",
-    direction: "desc",
-  },
-  { value: "amount-asc", label: "Funding amount: lowest first", field: "amount", direction: "asc" },
+  { value: "amount-desc", label: "Amount: highest first", field: "amount", direction: "desc",},
+  { value: "amount-asc", label: "Amount: lowest first", field: "amount", direction: "asc" },
 ];
 
 export default function GrantsSearchPage() {
@@ -45,16 +40,21 @@ function GrantsSearchContent() {
     });
 
   return (
-    <div>
+    <div style={{ padding: "1rem", "boxSizing": "border-box", maxWidth: "1200px", margin: "0 auto" }}>
       <h1>Grants</h1>
 
+      <div style={{ float: "left", width: "33%" }}>
+
+      
       <SearchFilters
         config={grantsFacetUIConfig}
         filters={filters}
         facetCounts={results?.facetCounts}
         onFilterChange={setFilter}
       />
+      </div>
 
+      <div style={{ float: "right", width: "66%", paddingLeft: "1rem", "boxSizing": "border-box" }}>
       <SortControl label="Sort by" options={sortOptions} value={sort} onChange={setSort} />
 
       {status === "loading" && <p>Loading…</p>}
@@ -79,6 +79,7 @@ function GrantsSearchContent() {
       {status === "success" && results && (
         <Pagination page={page} pageSize={pageSize} total={results.total} onPageChange={setPage} />
       )}
+      </div>
     </div>
   );
 }
