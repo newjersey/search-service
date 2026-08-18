@@ -1,12 +1,12 @@
 export interface PaginationProps {
-  page: number
-  pageSize: number
-  total: number
-  onPageChange: (page: number) => void
+  page: number;
+  pageSize: number;
+  total: number;
+  onPageChange: (page: number) => void;
 }
 
 export function Pagination({ page, pageSize, total, onPageChange }: PaginationProps) {
-  const totalPages = Math.max(1, Math.ceil(total / pageSize))
+  const totalPages = Math.max(1, Math.ceil(total / pageSize));
 
   return (
     <nav aria-label="Pagination">
@@ -20,5 +20,5 @@ export function Pagination({ page, pageSize, total, onPageChange }: PaginationPr
         Next
       </button>
     </nav>
-  )
+  );
 }

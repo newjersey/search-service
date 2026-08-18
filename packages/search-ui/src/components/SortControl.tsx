@@ -1,28 +1,30 @@
-import type { ChangeEvent } from 'react'
-import type { SortDirection, SortSpec } from '@newjersey/search-core'
+import type { SortDirection, SortSpec } from "@newjersey/search-core";
+import type { ChangeEvent } from "react";
 
 export interface SortOption {
-  value: string
-  label: string
-  field: string
-  direction: SortDirection
+  value: string;
+  label: string;
+  field: string;
+  direction: SortDirection;
 }
 
 export interface SortControlProps {
-  label: string
-  options: SortOption[]
-  value: SortSpec | undefined
-  onChange: (sort: SortSpec) => void
+  label: string;
+  options: SortOption[];
+  value: SortSpec | undefined;
+  onChange: (sort: SortSpec) => void;
 }
 
 export function SortControl({ label, options, value, onChange }: SortControlProps) {
   const selected =
-    options.find((option) => option.field === value?.field && option.direction === value?.direction) ?? options[0]
+    options.find(
+      (option) => option.field === value?.field && option.direction === value?.direction,
+    ) ?? options[0];
 
   function handleChange(event: ChangeEvent<HTMLSelectElement>) {
-    const option = options.find((o) => o.value === event.target.value)
+    const option = options.find((o) => o.value === event.target.value);
     if (option) {
-      onChange({ field: option.field, direction: option.direction })
+      onChange({ field: option.field, direction: option.direction });
     }
   }
 
@@ -37,5 +39,5 @@ export function SortControl({ label, options, value, onChange }: SortControlProp
         ))}
       </select>
     </label>
-  )
+  );
 }

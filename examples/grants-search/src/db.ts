@@ -1,5 +1,5 @@
-import { Kysely, PostgresDialect } from 'kysely'
-import { Pool } from 'pg'
+import { Kysely, PostgresDialect } from "kysely";
+import { Pool } from "pg";
 
 // GRANTS_DATABASE_URL should point to a role with read-only access to the
 // `grants` table specifically — never an application's full credentials.
@@ -11,4 +11,4 @@ export const db = new Kysely<any>({
       statement_timeout: 5_000,
     }),
   }),
-})
+});

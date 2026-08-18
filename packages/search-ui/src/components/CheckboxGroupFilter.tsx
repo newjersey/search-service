@@ -1,17 +1,17 @@
-import type { ChangeEvent } from 'react'
+import type { ChangeEvent } from "react";
 
 export interface CheckboxGroupFilterOption {
-  value: string
-  label: string
-  count?: number
+  value: string;
+  label: string;
+  count?: number;
 }
 
 export interface CheckboxGroupFilterProps {
-  facetKey: string
-  legend: string
-  options: CheckboxGroupFilterOption[]
-  selected: string[]
-  onChange: (selected: string[]) => void
+  facetKey: string;
+  legend: string;
+  options: CheckboxGroupFilterOption[];
+  selected: string[];
+  onChange: (selected: string[]) => void;
 }
 
 export function CheckboxGroupFilter({
@@ -23,9 +23,9 @@ export function CheckboxGroupFilter({
 }: CheckboxGroupFilterProps) {
   function handleChange(value: string, event: ChangeEvent<HTMLInputElement>) {
     if (event.target.checked) {
-      onChange([...selected, value])
+      onChange([...selected, value]);
     } else {
-      onChange(selected.filter((v) => v !== value))
+      onChange(selected.filter((v) => v !== value));
     }
   }
 
@@ -33,7 +33,7 @@ export function CheckboxGroupFilter({
     <fieldset>
       <legend>{legend}</legend>
       {options.map((option) => {
-        const id = `${facetKey}-${option.value}`
+        const id = `${facetKey}-${option.value}`;
         return (
           <div key={option.value}>
             <input
@@ -44,11 +44,11 @@ export function CheckboxGroupFilter({
             />
             <label htmlFor={id}>
               {option.label}
-              {option.count !== undefined ? ` (${option.count})` : ''}
+              {option.count !== undefined ? ` (${option.count})` : ""}
             </label>
           </div>
-        )
+        );
       })}
     </fieldset>
-  )
+  );
 }
