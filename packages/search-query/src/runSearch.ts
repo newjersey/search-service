@@ -6,7 +6,7 @@ import { applySort } from "./buildSort.js";
 import type { SearchConfig } from "./config.js";
 import { SearchQueryError } from "./errors.js";
 import { computeFacetCounts } from "./facetCounts.js";
-import { resolvePagination, validateFilters, validateSort } from "./validate.js";
+import { resolvePagination, validateFilters, validateSearch, validateSort } from "./validate.js";
 
 export async function runSearch<TRow>(
   db: Kysely<any>,
@@ -15,7 +15,8 @@ export async function runSearch<TRow>(
 ): Promise<SearchResult<TRow>> {
   validateFilters(config, request);
   validateSort(config, request);
-  const { page, pageSize } = resolvePagination(request);
+  validateSearch(request);
+  const { pageSize, offset } = resolvePagination(request);
 
   try {
     let baseQuery = db.selectFrom(config.table);
@@ -23,7 +24,7 @@ export async function runSearch<TRow>(
     baseQuery = applySearch(baseQuery, config, request);
 
     let resultsQuery = applySort(baseQuery.selectAll(), config, request);
-    resultsQuery = resultsQuery.limit(pageSize).offset((page - 1) * pageSize);
+    resultsQuery = resultsQuery.limit(pageSize).offset(offset);
 
     const [rows, totalRow, facetCounts] = await Promise.all([
       resultsQuery.execute(),

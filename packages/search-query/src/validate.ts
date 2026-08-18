@@ -4,10 +4,14 @@ import { InvalidSearchRequestError } from "./errors.js";
 
 export const MAX_PAGE_SIZE = 100;
 export const DEFAULT_PAGE_SIZE = 20;
+export const MAX_FILTER_VALUES = 100;
+export const MAX_SEARCH_LENGTH = 200;
+export const MAX_OFFSET = 10_000;
 
 export interface ValidatedPagination {
   page: number;
   pageSize: number;
+  offset: number;
 }
 
 export function validateFilters(config: SearchConfig, request: SearchRequest): void {
@@ -19,6 +23,19 @@ export function validateFilters(config: SearchConfig, request: SearchRequest): v
     if (!Array.isArray(value) || !value.every((v) => typeof v === "string")) {
       throw new InvalidSearchRequestError(`Filter "${key}" expects an array of strings`);
     }
+    if (value.length > MAX_FILTER_VALUES) {
+      throw new InvalidSearchRequestError(
+        `Filter "${key}" exceeds the maximum of ${MAX_FILTER_VALUES} values`,
+      );
+    }
+  }
+}
+
+export function validateSearch(request: SearchRequest): void {
+  if (request.search && request.search.length > MAX_SEARCH_LENGTH) {
+    throw new InvalidSearchRequestError(
+      `Search term exceeds the maximum length of ${MAX_SEARCH_LENGTH} characters`,
+    );
   }
 }
 
@@ -33,5 +50,6 @@ export function resolvePagination(request: SearchRequest): ValidatedPagination {
   const requestedSize =
     request.pageSize && request.pageSize > 0 ? Math.floor(request.pageSize) : DEFAULT_PAGE_SIZE;
   const pageSize = Math.min(requestedSize, MAX_PAGE_SIZE);
-  return { page, pageSize };
+  const offset = Math.min((page - 1) * pageSize, MAX_OFFSET);
+  return { page, pageSize, offset };
 }
