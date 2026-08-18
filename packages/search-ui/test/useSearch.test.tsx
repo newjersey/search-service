@@ -116,4 +116,22 @@ describe('useSearch', () => {
     // window.history was never touched because the custom adapter intercepted it.
     expect(window.location.search).toBe('')
   })
+
+  it('sends the default pageSize in the request and exposes it in the returned state', async () => {
+    const fetcher = vi.fn().mockResolvedValue(makeResult([]))
+    const { result } = renderHook(() => useSearch(config, { fetcher }))
+    await waitFor(() => expect(result.current.status).toBe('success'))
+
+    expect(fetcher).toHaveBeenLastCalledWith(expect.objectContaining({ pageSize: 20 }))
+    expect(result.current.pageSize).toBe(20)
+  })
+
+  it('uses a custom pageSize from options when provided', async () => {
+    const fetcher = vi.fn().mockResolvedValue(makeResult([]))
+    const { result } = renderHook(() => useSearch(config, { fetcher, pageSize: 10 }))
+    await waitFor(() => expect(result.current.status).toBe('success'))
+
+    expect(fetcher).toHaveBeenLastCalledWith(expect.objectContaining({ pageSize: 10 }))
+    expect(result.current.pageSize).toBe(10)
+  })
 })

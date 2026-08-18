@@ -11,8 +11,10 @@ import type { SearchUrlAdapter } from './urlState.js'
 export type SearchFetcher<TRow> = (request: SearchRequest) => Promise<SearchResult<TRow>>
 
 export type UseSearchOptions<TRow> =
-  | { endpoint: string; urlAdapter?: SearchUrlAdapter }
-  | { fetcher: SearchFetcher<TRow>; urlAdapter?: SearchUrlAdapter }
+  | { endpoint: string; urlAdapter?: SearchUrlAdapter; pageSize?: number }
+  | { fetcher: SearchFetcher<TRow>; urlAdapter?: SearchUrlAdapter; pageSize?: number }
+
+export const DEFAULT_PAGE_SIZE = 20
 
 export type SearchStatus = 'loading' | 'error' | 'success'
 
@@ -28,6 +30,7 @@ export interface UseSearchResult<TRow> {
   setSearch: (term: string | undefined) => void
   page: number
   setPage: (page: number) => void
+  pageSize: number
 }
 
 function buildDefaultFetcher<TRow>(endpoint: string): SearchFetcher<TRow> {
@@ -50,6 +53,7 @@ export function useSearch<TRow>(
 ): UseSearchResult<TRow> {
   const fetcher = 'fetcher' in options ? options.fetcher : buildDefaultFetcher<TRow>(options.endpoint)
   const urlAdapter = options.urlAdapter ?? browserHistoryAdapter
+  const pageSize = options.pageSize ?? DEFAULT_PAGE_SIZE
 
   const initialRequest = useRef(decodeSearchStateFromParams(config, urlAdapter.getSearchParams())).current
 
@@ -63,7 +67,7 @@ export function useSearch<TRow>(
   const [error, setError] = useState<Error>()
 
   useEffect(() => {
-    const request: SearchRequest = { filters, sort, search, page }
+    const request: SearchRequest = { filters, sort, search, page, pageSize }
 
     const params = encodeSearchStateToParams(config, request)
     urlAdapter.setSearchParams(params)
@@ -89,7 +93,7 @@ export function useSearch<TRow>(
     // render from `options`, but only the actual search-state values below
     // should trigger a re-fetch.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters, sort, search, page])
+  }, [filters, sort, search, page, pageSize])
 
   const setFilter = useCallback((key: string, values: string[]) => {
     setFilters((prev) => ({ ...prev, [key]: values }))
@@ -109,5 +113,5 @@ export function useSearch<TRow>(
     setPageState(newPage)
   }, [])
 
-  return { status, results, error, filters, setFilter, sort, setSort, search, setSearch, page, setPage }
+  return { status, results, error, filters, setFilter, sort, setSort, search, setSearch, page, setPage, pageSize }
 }

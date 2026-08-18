@@ -12,3 +12,9 @@ export type { CheckboxGroupFilterProps, CheckboxGroupFilterOption } from './comp
 
 export { SearchFilters } from './components/SearchFilters.js'
 export type { SearchFiltersProps } from './components/SearchFilters.js'
+
+export { SortControl } from './components/SortControl.js'
+export type { SortControlProps, SortOption } from './components/SortControl.js'
+
+export { Pagination } from './components/Pagination.js'
+export type { PaginationProps } from './components/Pagination.js'
