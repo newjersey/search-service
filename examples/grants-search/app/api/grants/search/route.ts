@@ -1,7 +1,7 @@
 import { runSearch, InvalidSearchRequestError } from '@newjersey/search-query'
 import type { SearchRequest } from '@newjersey/search-core'
-import { db } from '../../../../src/db.js'
-import { grantsSearchConfig } from '../../../../src/searchConfig.js'
+import { db } from '../../../../src/db'
+import { grantsSearchConfig } from '../../../../src/searchConfig'
 
 interface Grant {
   id: number
