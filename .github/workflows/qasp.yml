@@ -14,6 +14,5 @@ jobs:
     uses: newjersey/innovation-shared-actions/.github/workflows/qasp.yml@feat/qasp-shared-workflow
     secrets: inherit
     with:
-      deployment-check-urls: |
-        https://registry.npmjs.org/@newjersey/search-core
-      system-diagram-location: "docs/architecture.md"
+      deployment-check-urls:
+      system-diagram-location:
