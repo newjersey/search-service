@@ -2,6 +2,7 @@
   "name": "@newjersey/search-core",
   "version": "0.1.0",
   "description": "Shared TypeScript types for the NJIA faceted search toolkit",
+  "license": "MIT",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

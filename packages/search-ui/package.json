@@ -2,6 +2,7 @@
   "name": "@newjersey/search-ui",
   "version": "0.1.0",
   "description": "React hooks and components for the NJIA faceted search toolkit",
+  "license": "MIT",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
