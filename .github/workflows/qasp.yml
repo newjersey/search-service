@@ -7,13 +7,15 @@ on:
 
 permissions:
   contents: read
-  security-events: read
 
 jobs:
   qasp:
+    name: QASP
     uses: newjersey/innovation-shared-actions/.github/workflows/qasp.yml@feat/qasp-shared-workflow
     secrets: inherit
     with:
       deployment-check-urls: |
         https://registry.npmjs.org/@newjersey/njwds
       system-diagram-location: "docs/architecture.md"
+      node-version: ".nvmrc" # optional (default: .nvmrc)
+      test-coverage-command: "npm run test:coverage" # optional (default: npm run test:coverage)
