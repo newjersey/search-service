@@ -10,7 +10,6 @@ permissions:
 
 jobs:
   qasp:
-    name: QASP
     uses: newjersey/innovation-shared-actions/.github/workflows/qasp.yml@feat/qasp-shared-workflow
     secrets: inherit
     with:
