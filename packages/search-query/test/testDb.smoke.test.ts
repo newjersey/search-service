@@ -1,5 +1,5 @@
 import { afterAll, describe, expect, it } from "vitest";
-import { seedGrants, startTestDb, stopTestDb } from "./testDb.js";
+import { seedGrants, startTestDb, stopTestDb } from "./fixtures/testDb.js";
 
 describe("test database harness", () => {
   it("starts Postgres, creates the grants table, and seeds three rows", async () => {

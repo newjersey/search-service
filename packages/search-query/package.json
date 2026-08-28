@@ -2,6 +2,7 @@
   "name": "@newjersey/search-query",
   "version": "0.1.0",
   "description": "Postgres query builder for the NJIA faceted search toolkit",
+  "license": "MIT",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

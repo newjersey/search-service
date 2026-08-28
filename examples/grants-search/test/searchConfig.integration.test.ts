@@ -1,30 +1,17 @@
 import { runSearch } from "@newjersey/search-query";
-import { PostgreSqlContainer, type StartedPostgreSqlContainer } from "@testcontainers/postgresql";
-import { Kysely, PostgresDialect } from "kysely";
-import { Pool } from "pg";
+import type { StartedPostgreSqlContainer } from "@testcontainers/postgresql";
+import type { Kysely } from "kysely";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { startTestDb, stopTestDb } from "../../../packages/search-query/test/fixtures/testDb.js";
 import { grantsSearchConfig } from "../src/searchConfig.js";
 
 let db: Kysely<any>;
 let container: StartedPostgreSqlContainer;
 
 beforeAll(async () => {
-  container = await new PostgreSqlContainer("postgres:16").start();
-  db = new Kysely<any>({
-    dialect: new PostgresDialect({
-      pool: new Pool({ connectionString: container.getConnectionUri() }),
-    }),
-  });
-  await db.schema
-    .createTable("grants")
-    .addColumn("id", "serial", (col) => col.primaryKey())
-    .addColumn("title", "text", (col) => col.notNull())
-    .addColumn("description", "text", (col) => col.notNull())
-    .addColumn("status", "text", (col) => col.notNull())
-    .addColumn("category", "text", (col) => col.notNull())
-    .addColumn("funding_amount", "numeric", (col) => col.notNull())
-    .addColumn("application_deadline", "date", (col) => col.notNull())
-    .execute();
+  const started = await startTestDb();
+  db = started.db;
+  container = started.container;
   await db
     .insertInto("grants")
     .values([
@@ -49,8 +36,7 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  await db.destroy();
-  await container.stop();
+  await stopTestDb(db, container);
 });
 
 describe("grantsSearchConfig", () => {
