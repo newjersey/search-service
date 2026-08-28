@@ -1,4 +1,4 @@
-name: QASP Run
+name: QASP
 
 on:
   push:
