@@ -3,7 +3,7 @@ import type { Kysely } from "kysely";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { applySort } from "../src/buildSort.js";
 import { defineSearchConfig } from "../src/config.js";
-import { seedGrants, startTestDb, stopTestDb } from "./testDb.js";
+import { seedGrants, startTestDb, stopTestDb } from "./fixtures/testDb.js";
 
 const config = defineSearchConfig({
   table: "grants",

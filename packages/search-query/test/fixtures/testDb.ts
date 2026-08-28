@@ -6,7 +6,15 @@ export async function startTestDb(): Promise<{
   db: Kysely<any>;
   container: StartedPostgreSqlContainer;
 }> {
-  const container = await new PostgreSqlContainer("postgres:16").start();
+  let container: StartedPostgreSqlContainer;
+  try {
+    container = await new PostgreSqlContainer("postgres:16").start();
+  } catch (cause) {
+    throw new Error(
+      "Integration tests need a running container runtime (e.g. Docker, Colima, Podman) to start Postgres. Start yours and re-run `npm run test`.",
+      { cause },
+    );
+  }
   const db = new Kysely<any>({
     dialect: new PostgresDialect({
       pool: new Pool({ connectionString: container.getConnectionUri() }),
@@ -27,9 +35,10 @@ export async function startTestDb(): Promise<{
 }
 
 export async function stopTestDb(
-  db: Kysely<any>,
-  container: StartedPostgreSqlContainer,
+  db: Kysely<any> | undefined,
+  container: StartedPostgreSqlContainer | undefined,
 ): Promise<void> {
+  if (!db || !container) return;
   await db.destroy();
   await container.stop();
 }

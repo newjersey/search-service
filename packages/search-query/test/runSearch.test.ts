@@ -4,7 +4,7 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { defineSearchConfig } from "../src/config.js";
 import { InvalidSearchRequestError } from "../src/errors.js";
 import { runSearch } from "../src/runSearch.js";
-import { seedGrants, startTestDb, stopTestDb } from "./testDb.js";
+import { seedGrants, startTestDb, stopTestDb } from "./fixtures/testDb.js";
 
 const config = defineSearchConfig({
   table: "grants",
